@@ -21,10 +21,10 @@ module.exports = {
             },
             {
                 test: /\.vue$/,
-                loader:'vue-loader',
-                options:{
-                    loaders:{
-                        scss:'style-loader!css-loader!sass-loader'
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        scss: 'style-loader!css-loader!sass-loader'
                     }
                 }
             },
@@ -34,12 +34,13 @@ module.exports = {
             },
 
         ]
-    }, 
+    },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
             'vue$': 'vue/dist/vue.common.js',
         }
     },
+
 
 }

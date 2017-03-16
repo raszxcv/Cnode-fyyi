@@ -4,19 +4,19 @@
             <div class="nav">
                 <ul>
                     <li>
-                        <a href="#" @click="changTab('all')" :class="{color:isAll}">全部</a>
+                        <a href="#" @click="changTab('all')" >全部</a>
                     </li>
                     <li>
-                        <a href="#" @click="changTab('good')" :class="{color:isGood}">精华</a>
+                        <a href="#" @click="changTab('good')" >精华</a>
                     </li>
                     <li>
-                        <a href="#" @click="changTab('share')" :class="{color:isShare}">分享</a>
+                        <a href="#" @click="changTab('share')" >分享</a>
                     </li>
                     <li>
-                        <a href="#" @click="changTab('ask')" :class="{color:isAsk}">问答</a>
+                        <a href="#" @click="changTab('ask')" >问答</a>
                     </li>
                     <li>
-                        <a href="#" @click="changTab('job')" :class="{color:isJob}">招聘</a>
+                        <a href="#" @click="changTab('job')" >招聘</a>
                     </li>
                 </ul>
             </div>
@@ -25,8 +25,8 @@
                     <li v-for="(item,index) in items">
                         <img :src="item.author">
                         <span class='replyVisit'>{{ item.reply }}/{{ item.visit}}</span>
-                        <span class='statu' v-text="statu(index)" v-if="item.ishow"></span>
-                        <a href="#">{{ item.title }}</a>
+                        <span class='statu' v-text="statu(index)" ></span>
+                        <router-link :to="content(item.id)" >{{ item.title }}</router-link>
                     </li>
                 </ul>
             </div>
@@ -37,6 +37,7 @@
 <script>
     export default {
         name: 'MainAll',
+        components:{},
         data() {
             return {
                 items: [],
@@ -48,15 +49,21 @@
             }
         },
         created() {
-            this.Axios(this, {
-                limit: 10,
-                page: 1,
-
+            this.Axios(this,{
+                limit:10,
+                page:1,
+                tab:'all'
             })
-            this.isAll = true
         },
-        computed: {},
+        computed:{
+            // content(){
+            //     return `content/${this.items[0].id}`
+            // }
+        },
         methods: {
+            content(id){
+                return `content/${id}`
+            },
             statu: function (val) {
                 if (this.items[val].top === true) {
                     return "置顶"
@@ -76,9 +83,7 @@
                 [this.isGood, this.isAsk, this.isJob, this.isShare, this.isAll] = [false, false, false, false, false]
                 switch (tab) {
                     case 'good':
-                        console.log(this.isGood)
                         this.isGood = true
-                        console.log(this.isGood)
                         this.Axios(this, {
                             limit: 10,
                             tab: tab
@@ -111,7 +116,7 @@
                             limit: 10,
                         })
                 }
-            }
+            },
         }
     }
 </script>

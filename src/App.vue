@@ -2,9 +2,7 @@
     <div>
         <TopBar></TopBar>
         <!--<MainNav></MainNav>-->
-        <router-view>
-
-        </router-view>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -14,6 +12,7 @@
     import TopBar from './components/TopBar'
     import MainNav from './components/MainNav'
     import MainAll from './components/MainAll'
+    import store from './store/index.js'
 
     export default {
         data() {
@@ -26,7 +25,8 @@
             MainAll,
             MainNav
         },
-        created() {}
+        created() {},
+        store
 
     }
 </script>
