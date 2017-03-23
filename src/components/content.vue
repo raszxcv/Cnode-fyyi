@@ -1,40 +1,51 @@
 <template>
     <div>
-        <main v-html="cnt">
-           
+        <main class="markdown-body" v-html="cnt">
         </main>
+        <comment></comment>
     </div>
+
 </template>
 
 <script>
+    import 'github-markdown-css/github-markdown.css'
+    import comment from './comment'
     export default {
-        name:"content",
+        name: "content",
+        components: {
+            comment
+        },
         data() {
             return {
-                cnt:'',
+                cnt: '',
             }
         },
-        created(){
-            console.log(this.$route.params.id)
-            let vm = this
-            this.axios.get('https://cnodejs.org/api/v1/topic/'+this.$route.params.id,{
-                params:{
-                    mdrender:true
-                }
-            })
-            .then(function(res){
-                vm.cnt = res.data.data.content
-
-            })
+        created() {
+            this.Axios.getTabDetailed(this, this.$route.params.id)
         }
     }
 </script>
 
-<style lang="scss" scoped>
-    main {
+<style lang="scss">
+    main.markdown-body {
         margin: 0 auto;
         margin-top: 30px;
-        width: 80%;
+        max-width: 980px;
         background: #fff;
+        word-break: break-all;
+    }
+
+    .markdown-text {
+        width: 96%;
+        margin: 0 auto;
+        >p {
+            margin: 0 auto;
+            >img {
+                width: 100%;
+            }
+        }
+        >pre {
+            white-space: pre-wrap;
+        }
     }
 </style>

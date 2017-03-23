@@ -4,19 +4,19 @@
             <div class="nav">
                 <ul>
                     <li>
-                        <a href="#" @click="changTab('all')" >全部</a>
+                        <a href="#" @click="changTab('all')">全部</a>
                     </li>
                     <li>
-                        <a href="#" @click="changTab('good')" >精华</a>
+                        <a href="#" @click="changTab('good')">精华</a>
                     </li>
                     <li>
-                        <a href="#" @click="changTab('share')" >分享</a>
+                        <a href="#" @click="changTab('share')">分享</a>
                     </li>
                     <li>
-                        <a href="#" @click="changTab('ask')" >问答</a>
+                        <a href="#" @click="changTab('ask')">问答</a>
                     </li>
                     <li>
-                        <a href="#" @click="changTab('job')" >招聘</a>
+                        <a href="#" @click="changTab('job')">招聘</a>
                     </li>
                 </ul>
             </div>
@@ -25,8 +25,8 @@
                     <li v-for="(item,index) in items">
                         <img :src="item.author">
                         <span class='replyVisit'>{{ item.reply }}/{{ item.visit}}</span>
-                        <span class='statu' v-text="statu(index)" ></span>
-                        <router-link :to="content(item.id)" >{{ item.title }}</router-link>
+                        <span class='statu' v-text="statu(index)"></span>
+                        <router-link :to="content(item.id)">{{ item.title }}</router-link>
                     </li>
                 </ul>
             </div>
@@ -35,9 +35,10 @@
 </template>
 
 <script>
+import bus from '../bus'
     export default {
         name: 'MainAll',
-        components:{},
+        components: {},
         data() {
             return {
                 items: [],
@@ -49,19 +50,19 @@
             }
         },
         created() {
-            this.Axios(this,{
-                limit:10,
-                page:1,
-                tab:'all'
-            })
+            this.Axios.getTab(this, {
+                    limit: 10,
+                    page: 1,
+                    tab: 'all'
+                })
+                bus.$emit('nice')
+                
         },
-        computed:{
-            // content(){
-            //     return `content/${this.items[0].id}`
-            // }
+        computed: {
+
         },
         methods: {
-            content(id){
+            content(id) {
                 return `content/${id}`
             },
             statu: function (val) {
@@ -145,7 +146,7 @@
                 }
             }
         }
-        width: 80%;
+        max-width: 980px;
         margin: 0 auto;
         background: #fff;
         >.all {
@@ -157,22 +158,26 @@
                     border-bottom: 1px solid #ccc;
                     padding: 5px;
                     padding-left: 10px;
+                    >a {
+                        word-break: break-all;
+                        margin-left: 5px;
+                    }
                     >img {
                         width: 30px;
-                        height: 30px;
                         margin-right: 10px;
                     }
                     >.replyVisit {
                         font-size: 10px;
                         margin-right: 10px;
-                        width: 65px;
+                        min-width: 65px;
                         text-align: center;
                     }
                     >.statu {
                         font-size: 14px;
                         margin-right: 10px;
-                        padding: 2px;
+                        min-width: 30px;
                         background: green;
+                        color: #fff;
                     }
                 }
                 >li:hover {
