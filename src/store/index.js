@@ -1,7 +1,5 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
-import Axios from '../getAllData'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({

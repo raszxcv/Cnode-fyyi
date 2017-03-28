@@ -13,6 +13,7 @@
 
 <script>
 import bus from '../bus'
+import {Login} from '../getAllData'
     export default {
         name:"login",
         data() {
@@ -24,7 +25,7 @@ import bus from '../bus'
         },
         methods:{
             login() {
-                this.Axios.Login(this,this.acctoken)
+                Login(this,this.acctoken)
             },
         },
     }

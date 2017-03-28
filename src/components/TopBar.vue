@@ -2,8 +2,11 @@
     <div id="TopBar">
         <header>
             <div class="menu">
-                <img src="../../assets/cnodejs.svg" alt="">
+                <a href="#"><img src="../../assets/cnodejs.svg" alt=""></a>
                 <ul>
+                    <li>
+                        <img :src="author" alt="">
+                    </li>
                     <li>
                         <router-link to="/">首页</router-link>
                     </li>
@@ -22,22 +25,28 @@
         name: "TopBar",
         data() {
             return {
-                logInState:'',
-                signUpState:'',
+                logInState: '',
+                signUpState: '',
+                author: ''
             }
         },
         created() {
             let vm = this
-            bus.$on('login', function () {
+            bus.$on('login', function (author) {
+                vm.author = JSON.parse(localStorage.getItem('acctoken'))[1]
                 if (localStorage.getItem('acctoken')) {
                     vm.logInState = false
                     vm.signUpState = true
                 }
             })
             if (localStorage.getItem('acctoken')) {
-                    vm.logInState = false
-                    vm.signUpState = true
-                }
+                vm.author = JSON.parse(localStorage.getItem('acctoken'))[1]
+                vm.logInState = false
+                vm.signUpState = true
+            } else {
+                vm.logInState = true
+                vm.signUpState = false
+            }
         },
         methods: {
             signUp() {
@@ -55,21 +64,30 @@
 <style lang="scss" scoped>
     header {
         width: auto;
-        background: #ccc;
+        background: #6495ED;
         >.menu {
             margin: 0 auto;
             width: 80%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            >img {
-                width: 150px;
-                height: 40px;
+            >a {
+                >img {
+                    width: 150px;
+                    height: 40px;
+                }
             }
+
             >ul {
                 display: flex;
+                align-items: center;
+                justify-content: center;
                 >li {
                     margin-left: 15px;
+                    >img {
+                        width: 30px;
+                        height: 30px;
+                    }
                 }
             }
         }

@@ -1,7 +1,16 @@
-<template>  
+<template>
     <div id="comment">
+        <header>
+            {{commentL}}回复
+        </header>
         <ul>
-            <li v-for="item in items">
+            <li v-for="(item,index) in items">
+                <div class='userData'>
+                    <span><img :src="item.userUrl"></span>
+
+                    <span>{{item.userName}} {{index+1}}楼</span>
+                </div>
+
                 <div class="markdown-body" v-html="item.commentText"></div>
             </li>
         </ul>
@@ -9,38 +18,57 @@
 </template>
 
 <script>
-import bus from '../bus'
-    export default{
-        data(){
+    import bus from '../bus'
+    export default {
+        data() {
             return {
-                items:[],
+                items: [],
+                commentL: ''
 
             }
         },
         created() {
             let vm = this
-            bus.$on('comment',function(cnt){
+            bus.$on('comment', function (cnt) {
                 cnt.map(val => {
                     vm.items.push({
-                        commentText:val.content,
-                        commentTime:val.create_at,
-                        userName:val.author.loginname,
-                        userUrl:val.author.avatar_url
+                        commentText: val.content,
+                        userName: val.author.loginname,
+                        userUrl: val.author.avatar_url
                     })
                 })
-                console.log(cnt)
+                vm.commentL = cnt.length
             })
         }
     }
 </script>
 
 <style lang='scss'>
-    #comment>ul>li>.markdown-body{
-        border:1px solid red;
-        padding:5px;
-        background:#fff;
-        max-width: 980px; 
-        margin:0 auto;
-        margin-top:10px;
+    #comment {
+        background: #fff;
+        max-width: 980px;
+        margin: 0 auto;
+        margin-top: 10px;
+        >header {
+            background: #bbb;
+        }
+        >ul {
+            >li {
+                border-bottom: 1px solid #ccc;
+                >.userData {
+                    >span {
+                        
+                        >img {
+                            width: 30px;
+                            height:30px;
+                            border-radius:5px;
+                        }
+                    }
+                }
+                >.markdown-body {
+                    padding-left: 20px;
+                }
+            }
+        }
     }
 </style>

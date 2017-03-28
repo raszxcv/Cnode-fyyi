@@ -3,6 +3,7 @@
         <main class="markdown-body" v-html="cnt">
         </main>
         <comment></comment>
+        <reply :replyId='topicid'></reply>
     </div>
 
 </template>
@@ -10,10 +11,13 @@
 <script>
     import 'github-markdown-css/github-markdown.css'
     import comment from './comment'
+    import reply from './reply'
+    import {getTabDatailed} from '../getAllData'
     export default {
         name: "content",
         components: {
-            comment
+            comment,
+            reply
         },
         data() {
             return {
@@ -21,7 +25,15 @@
             }
         },
         created() {
-            this.Axios.getTabDetailed(this, this.$route.params.id)
+            getTabDatailed(this, this.$route.params.id)
+        },
+        computed: {
+            topicid(){
+                return this.$route.params.id
+            }
+        },
+        methods:{
+            
         }
     }
 </script>
