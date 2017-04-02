@@ -48,7 +48,6 @@
         background: #fff;
         max-width: 980px;
         margin: 0 auto;
-        margin-top: 10px;
         >header {
             background: #bbb;
         }
@@ -57,7 +56,6 @@
                 border-bottom: 1px solid #ccc;
                 >.userData {
                     >span {
-                        
                         >img {
                             width: 30px;
                             height:30px;

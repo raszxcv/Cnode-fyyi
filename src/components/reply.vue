@@ -36,15 +36,25 @@ import {reply} from '../getAllData'
 
 <style lang="scss" scoped>
     #reply {
-        /*background: black;*/
+        
         max-width: 980px;
         margin: 0 auto;
-        margin-top: 30px;
+        margin-top:10px;
         >.cnt {
             >textarea {
                 height: 100px;
                 width: 100%;
                 border: none;
+            }
+        }
+        @media(max-width:600px){
+            >button{
+                width:100%;
+            }
+        }
+        @media(min-width:600px){
+            >button{
+                width:50px;
             }
         }
         >button {

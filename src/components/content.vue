@@ -41,7 +41,6 @@
 <style lang="scss">
     main.markdown-body {
         margin: 0 auto;
-        margin-top: 30px;
         max-width: 980px;
         background: #fff;
         word-break: break-all;
