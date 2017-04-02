@@ -31,23 +31,22 @@
                 </ul>
             </div>
             <ul class="ab">
-                <li @click.prevent='top'>
+                <li @click.prevent='top' class='top'>
                     <a href="#">
                         <<</a>
                 </li>
-                <li @click.prevent='pre'>
+                <li @click.prevent='pre' class='pre'>
                     <a href="#">
                         <</a>
                 </li>
                 <li class='page'>
-                    <span v-for="(item,index) in pageNum">
-                        <a href="#" @click.prevent="page(index)" :class="{ inpage:isPage(index) }">{{ item }}</a>
+                    <span v-for="(item,index) in pageNum" @click="page(index)" :class="{ inpage:isPage(index) }">
+                        <a href="javascript:void(0)" >{{ item }}</a>
                         </span>
                 </li>
-                <li @click.prevent='next'><a href="#">></a></li>
+                <li @click.prevent='next' class='next'><a href="#">></a></li>
             </ul>
         </main>
-
     </div>
 </template>
 
@@ -73,7 +72,7 @@
             }
         },
         created() {
-            this.pages = [this.num,this.num+1,this.num+2,this.num+3,this.num+4]
+            this.pages = [this.num, this.num + 1, this.num + 2, this.num + 3, this.num + 4]
             getTab(this, {
                 limit: 20,
                 page: this.num,
@@ -89,7 +88,7 @@
                     return this.pages
                 } else if (this.pages.indexOf(this.num) < 1) {
                     if (this.num === 1) {
-                        this.pages = [1,2,3,4,5]
+                        this.pages = [1, 2, 3, 4, 5]
                         return this.pages
                     }
                     this.pages.pop()
@@ -227,12 +226,21 @@
 </script>
 
 <style lang="scss" scoped>
+@media(min-width:600px){
+    main{
+        margin-bottom:20px;  
+    }
+}
+@media(max-width:600px){
+    main{
+        margin-bottom:0px;  
+    }
+}
     main {
         >.nav {
             width: 100%;
             background: #87CEFA;
             margin: 0 auto;
-
             >ul {
                 display: flex;
                 >li {
@@ -254,9 +262,10 @@
             }
         }
         max-width: 980px;
-        margin: 0 auto;
-        margin-top: 30px;
+        margin-left:auto;
+        margin-right:auto;
         background: #fff;
+              
         >.all {
             background: #fff;
             >ul {
@@ -303,35 +312,61 @@
         background: #1E90FF;
     }
 
-    .inpage {
-        color: red;
-    }
+
 
     .ab {
         margin-top: 20px;
-        margin-left: 10px;
         display: flex;
         >li {
             text-align: center;
-            padding: 5px;
             width: 30px;
-            margin-right: 3px;
+            height: 30px;
+            line-height:30px;
             background: #ADD8E6;
             border-radius: 3px;
         }
         >li:hover {
             background: #87CEEB;
         }
-        >.page {
-            width: 100%;
-            background: #1D8CE0;
-            display: flex;
-            justify-content: center;
-            >span {  
-                margin-left: 2%;
-                margin-right: 2%;
+        >.page:hover {
+            background: none;
+        }
+        >.pre {
+            margin-right: 0px;
+        }
+        @media(min-width:600px) {
+            >.page {
+                width: 150px;
             }
         }
+        >.page {
+            width: 150px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            margin-right: 0px;
+            padding-right: 0;
+            padding-left: 0;
+            >span {
+                display: inline-block;
+                line-height: 30px;
+                width: 30px;
+                height: 30px;
+                background: #fff;
+                border-radius: 3px;
+                background: #87CEEB;
+                cursor: pointer;
+                >a {
+                    color: black;
+                }            
+            }
+            >span:hover{
+                background:#eee;
+            }
+            >.inpage {
+                    background:#fff;
+                }
+        }
     }
-    
 </style>

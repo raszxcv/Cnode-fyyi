@@ -7,7 +7,7 @@
             <!--<button @click="login">登录</button>-->
             <a href="#" @click.prevent="login">登录</a>
         </div>
-
+        <p><strong>Tips:</strong>Access Token在官网登录后设置里面可以查看</p>
     </div>
 </template>
 
@@ -52,6 +52,11 @@ import {Login} from '../getAllData'
             >button {
                 width: 50px;
             }
+        }
+        >p{
+            text-align: center;
+            font-size:12px;
+            margin-top:5px;
         }
     }
 </style>

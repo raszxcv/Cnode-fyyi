@@ -27,7 +27,7 @@
             return {
                 logInState: '',
                 signUpState: '',
-                ishow:false,
+                ishow: false,
                 author: ''
             }
         },
@@ -40,7 +40,7 @@
                     vm.signUpState = true
                     vm.ishow = true
                 }
-                
+
             })
             if (localStorage.getItem('acctoken')) {
                 vm.author = JSON.parse(localStorage.getItem('acctoken'))[1]
@@ -56,7 +56,7 @@
         methods: {
             signUp() {
                 localStorage.removeItem('acctoken')
-                this.author     = ''
+                this.author = ''
                 this.ishow = false
                 this.logInState = true
                 this.signUpState = false
@@ -69,17 +69,43 @@
 </script>
 
 <style lang="scss" scoped>
+    /*@media(max-width:600px) {
+        header {
+            >.menu {
+                width: 100%;
+            }
+        }
+    }*/
+    @media(max-width:600px){
+        header{
+            margin-bottom:0px;
+        }
+    }
+    @media(min-width:600px){
+        header{
+            margin-bottom:20px;
+        }
+    }
     header {
         width: auto;
         background: #58B7FF;
+        @media(max-width:600px){
+            >.menu{
+                width:100%;
+            }
+        }
+        @media(min-width:600px){
+            >.menu{
+                width:80%;
+            }
+        }
         >.menu {
-            margin: 0 auto;
-            width: 80%;
+            margin: 0 auto;           
             display: flex;
             justify-content: space-between;
             align-items: center;
             >a {
-                
+
                 >img {
                     width: 150px;
                     height: 40px;
@@ -94,12 +120,12 @@
                     >img {
                         width: 30px;
                         height: 30px;
-                        margin-right:10px;
+                        margin-right: 10px;
                     }
-                    >a{
+                    >a {
                         display: inline-block;
                         text-align: center;
-                        min-width:35px;
+                        min-width: 35px;
                     }
                 }
             }
