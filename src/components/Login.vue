@@ -5,7 +5,7 @@
         </div>
         <div class="btn">
             <!--<button @click="login">登录</button>-->
-            <a href="#" @click="login">登录</a>  
+            <a href="#" @click.prevent="login">登录</a>
         </div>
 
     </div>

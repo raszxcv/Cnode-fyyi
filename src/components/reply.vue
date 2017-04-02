@@ -43,7 +43,7 @@ import {reply} from '../getAllData'
         >.cnt {
             >textarea {
                 height: 100px;
-                width: 60%;
+                width: 100%;
                 border: none;
             }
         }

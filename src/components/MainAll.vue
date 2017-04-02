@@ -31,18 +31,20 @@
                 </ul>
             </div>
             <ul class="ab">
-                <li>
-                    <a href="#" @click.prevent='top'>
+                <li @click.prevent='top'>
+                    <a href="#">
                         <<</a>
                 </li>
-                <li>
-                    <a href="#" @click.prevent='pre'>
+                <li @click.prevent='pre'>
+                    <a href="#">
                         <</a>
                 </li>
-                <li class='page'>{{num}}</li>
-                <li><a href="#" @click.prevent='next'>></a></li>
-                <li><a href="#" @click.prevent='page'>>></a></li>
-                
+                <li class='page'>
+                    <span v-for="(item,index) in pageNum">
+                        <a href="#" @click.prevent="page(index)" :class="{ inpage:isPage(index) }">{{ item }}</a>
+                        </span>
+                </li>
+                <li @click.prevent='next'><a href="#">></a></li>
             </ul>
         </main>
 
@@ -60,27 +62,57 @@
         data() {
             return {
                 items: [],
-                isAll: true,
-                isGood: false,
-                isAsk: false,
-                isJob: false,
-                isShare: false,
-                num: +localStorage.getItem('page')||1,
-                status: '',
+                isAll: localStorage.getItem('tab') === 'all',
+                isGood: localStorage.getItem('tab') === 'good',
+                isAsk: localStorage.getItem('tab') === 'ask',
+                isJob: localStorage.getItem('tab') === 'job',
+                isShare: localStorage.getItem('tab') === 'share',
+                num: +localStorage.getItem('page') || 1,
+                status: localStorage.getItem('tab') || '',
+                pages: [1, 2, 3, 4, 5],
             }
         },
         created() {
-            getTab(this,{
-                limit:20,
-                page:this.num,
-                tab:this.status
+            this.pages = [this.num,this.num+1,this.num+2,this.num+3,this.num+4]
+            getTab(this, {
+                limit: 20,
+                page: this.num,
+                tab: this.status
             })
             bus.$emit('nice')
         },
         computed: {
-
+            pageNum() {
+                if (this.pages.indexOf(this.num) > 2) {
+                    this.pages.shift()
+                    this.pages.push(this.pages[this.pages.length - 1] + 1)
+                    return this.pages
+                } else if (this.pages.indexOf(this.num) < 1) {
+                    if (this.num === 1) {
+                        this.pages = [1,2,3,4,5]
+                        return this.pages
+                    }
+                    this.pages.pop()
+                    this.pages.unshift(this.pages[0] - 1)
+                    return this.pages
+                } else {
+                    return this.pages
+                }
+            },
+            num() {
+                if (localStorage.getItem('page')) {
+                    return localStorage.getItem('page')
+                } else {
+                    return 1
+                }
+            }
         },
         methods: {
+            isPage(idx) {
+                if (this.pages[idx] === this.num) {
+                    return true
+                }
+            },
             content(id) {
                 return `content/${id}`
             },
@@ -104,8 +136,9 @@
                 switch (tab) {
                     case 'good':
                         this.isGood = true
-                        this.status = tab
                         this.num = 1
+                        this.pages = [1, 2, 3, 4, 5]
+                        localStorage.setItem('tab', tab)
                         getTab(this, {
                             limit: 20,
                             tab: tab
@@ -113,8 +146,9 @@
                         break;
                     case 'ask':
                         this.isAsk = true
-                        this.status = tab
                         this.num = 1
+                        this.pages = [1, 2, 3, 4, 5]
+                        localStorage.setItem('tab', tab)
                         getTab(this, {
                             limit: 20,
                             tab: tab
@@ -122,8 +156,9 @@
                         break;
                     case 'job':
                         this.isJob = true
-                        this.status = tab
                         this.num = 1
+                        this.pages = [1, 2, 3, 4, 5]
+                        localStorage.setItem('tab', tab)
                         getTab(this, {
                             limit: 20,
                             tab: tab
@@ -131,8 +166,9 @@
                         break;
                     case 'share':
                         this.isShare = true
-                        this.status = tab
                         this.num = 1
+                        this.pages = [1, 2, 3, 4, 5]
+                        localStorage.setItem('tab', tab)
                         getTab(this, {
                             limit: 20,
                             tab: tab
@@ -141,51 +177,49 @@
                     default:
                         this.isAll = true
                         this.num = 1
-                        this.status = ''
+                        this.pages = [1, 2, 3, 4, 5]
+                        localStorage.setItem('tab', tab)
                         getTab(this, {
                             limit: 20,
                         })
                 }
             },
-            page(status) {
-                // switch (status) {
-                //     case "next":
-                //         this.num += 1
-                //         getTab(this, {
-                //             limit: 10,
-                //             page: this.num,
-                //             tab: this.status
-                //         })
-                //         break;
-                //     case "pre":
-                //         this.num -= 1
-                //         getTab(this, {
-                //             limit: 10,
-                //             page: this.num,
-                //             tab: this.status
-                //         })
-                //         break;
-                // }
-            },
-            next(){
-                this.num += 1
-                localStorage.setItem('page',this.num) 
-                getTab(this,{
-                    limit:20,
-                    page:this.num,
-                    tab:this.status
+            page(idx) {
+                this.num = this.pages[idx]
+                localStorage.setItem('page', this.num)
+                getTab(this, {
+                    limit: 20,
+                    page: this.num,
+                    tab: this.status
                 })
             },
-            pre(){
+            top() {
+                this.num = 1
+                getTab(this, {
+                    limit: 20,
+                    page: this.num,
+                    tab: this.status
+                })
+            },
+            next() {
+                this.num += 1
+                localStorage.setItem('page', this.num)
+                getTab(this, {
+                    limit: 20,
+                    page: this.num,
+                    tab: this.status
+                })
+            },
+            pre() {
                 this.num -= 1
-                if(this.num<1){
+                if (this.num < 1) {
                     this.num = 1
                 }
-                localStorage.setItem('page',this.num) 
-                getTab(this,{
-                    limit:20,
-                    page:this.num,
-                    tab:this.status
+                localStorage.setItem('page', this.num)
+                getTab(this, {
+                    limit: 20,
+                    page: this.num,
+                    tab: this.status
                 })
             }
         }
@@ -235,7 +269,7 @@
                     >a {
                         word-break: break-all;
                         margin-left: 5px;
-                        color:#000;
+                        color: #000;
                     }
                     >img {
                         width: 30px;
@@ -269,6 +303,10 @@
         background: #1E90FF;
     }
 
+    .inpage {
+        color: red;
+    }
+
     .ab {
         margin-top: 20px;
         margin-left: 10px;
@@ -284,8 +322,16 @@
         >li:hover {
             background: #87CEEB;
         }
-        >.page{
-            background:#1D8CE0;
+        >.page {
+            width: 100%;
+            background: #1D8CE0;
+            display: flex;
+            justify-content: center;
+            >span {  
+                margin-left: 2%;
+                margin-right: 2%;
+            }
         }
     }
+    
 </style>

@@ -5,7 +5,7 @@
                 <a href="#"><img src="../../assets/cnodejs.svg" alt=""></a>
                 <ul>
                     <li>
-                        <img :src="author" alt="">
+                        <img :src="author" alt="" v-show='ishow'>
                     </li>
                     <li>
                         <router-link to="/">首页</router-link>
@@ -13,7 +13,7 @@
                     <li>
                         <router-link to="/Login" v-show="logInState">登录</router-link>
                     </li>
-                    <li><a href="#" @click="signUp" v-show="signUpState">登出</a></li>
+                    <li><a href="#" @click.prevent="signUp" v-show="signUpState">登出</a></li>
                 </ul>
             </div>
         </header>
@@ -27,6 +27,7 @@
             return {
                 logInState: '',
                 signUpState: '',
+                ishow:false,
                 author: ''
             }
         },
@@ -37,13 +38,17 @@
                 if (localStorage.getItem('acctoken')) {
                     vm.logInState = false
                     vm.signUpState = true
+                    vm.ishow = true
                 }
+                
             })
             if (localStorage.getItem('acctoken')) {
                 vm.author = JSON.parse(localStorage.getItem('acctoken'))[1]
+                this.ishow = true
                 vm.logInState = false
                 vm.signUpState = true
             } else {
+                this.ishow = false
                 vm.logInState = true
                 vm.signUpState = false
             }
@@ -51,6 +56,8 @@
         methods: {
             signUp() {
                 localStorage.removeItem('acctoken')
+                this.author     = ''
+                this.ishow = false
                 this.logInState = true
                 this.signUpState = false
             },
@@ -72,6 +79,7 @@
             justify-content: space-between;
             align-items: center;
             >a {
+                
                 >img {
                     width: 150px;
                     height: 40px;
@@ -83,10 +91,15 @@
                 align-items: center;
                 justify-content: center;
                 >li {
-                    margin-left: 15px;
                     >img {
                         width: 30px;
                         height: 30px;
+                        margin-right:10px;
+                    }
+                    >a{
+                        display: inline-block;
+                        text-align: center;
+                        min-width:35px;
                     }
                 }
             }

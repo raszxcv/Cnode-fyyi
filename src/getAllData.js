@@ -58,9 +58,10 @@ export function Login(vm, acctoken) {
             let userData = JSON.stringify([acctoken, res.data.avatar_url])
             localStorage.setItem('acctoken', userData)
             bus.$emit('login', res.data.avatar_url)
+            history.back()
         })
         .catch(function (error) {
-            console.log(error)
+            alert('你的输入有误,请重新输入!')
         })
 }
 //新建评论
