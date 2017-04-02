@@ -81,7 +81,3 @@ export function reply(vm, cntid, acctoken, entry) {
             console.log(error)
         })
 }
-//获取下一页主题列表
-export function getTabs(vm,par){
-
-}

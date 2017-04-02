@@ -12,7 +12,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
 	routes:[
 	  {path:"/",component:MainAll},
-      {path:"/MainAll/:state",component:MainAll,name:'MainAll'},
+      {path:"/MainAll",component:MainAll,name:'MainAll'},
       {path:"/content/:id",component:content,name:'content'},
 	  {path:"/Login",component:Login,name:'Login'}
 	]

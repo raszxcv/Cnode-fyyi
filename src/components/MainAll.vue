@@ -39,9 +39,10 @@
                     <a href="#" @click.prevent='pre'>
                         <</a>
                 </li>
+                <li class='page'>{{num}}</li>
                 <li><a href="#" @click.prevent='next'>></a></li>
                 <li><a href="#" @click.prevent='page'>>></a></li>
-                {{num}}
+                
             </ul>
         </main>
 
@@ -64,7 +65,7 @@
                 isAsk: false,
                 isJob: false,
                 isShare: false,
-                num: 1,
+                num: +localStorage.getItem('page')||1,
                 status: '',
             }
         },
@@ -168,6 +169,7 @@
             },
             next(){
                 this.num += 1
+                localStorage.setItem('page',this.num) 
                 getTab(this,{
                     limit:20,
                     page:this.num,
@@ -179,6 +181,7 @@
                 if(this.num<1){
                     this.num = 1
                 }
+                localStorage.setItem('page',this.num) 
                 getTab(this,{
                     limit:20,
                     page:this.num,
@@ -280,6 +283,9 @@
         }
         >li:hover {
             background: #87CEEB;
+        }
+        >.page{
+            background:#1D8CE0;
         }
     }
 </style>

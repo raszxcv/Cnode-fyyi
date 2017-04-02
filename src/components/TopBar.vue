@@ -64,7 +64,7 @@
 <style lang="scss" scoped>
     header {
         width: auto;
-        background: #6495ED;
+        background: #58B7FF;
         >.menu {
             margin: 0 auto;
             width: 80%;
