@@ -265,7 +265,7 @@
         margin-left:auto;
         margin-right:auto;
         background: #fff;
-              
+        box-shadow:5px 5px 10px #888;
         >.all {
             background: #fff;
             >ul {
