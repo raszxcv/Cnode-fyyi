@@ -71,8 +71,13 @@
                 pages: [1, 2, 3, 4, 5],
             }
         },
+        beforeCreate(){
+            if(localStorage.getItem('tab') === null){
+                localStorage.setItem('tab','all')
+            }
+            
+        },
         created() {
-            localStorage.setItem('tab','all')
             this.pages = [this.num, this.num + 1, this.num + 2, this.num + 3, this.num + 4]
             getTab(this, {
                 limit: 20,

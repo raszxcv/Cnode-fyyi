@@ -40,11 +40,13 @@ import {reply} from '../getAllData'
         max-width: 980px;
         margin: 0 auto;
         margin-top:10px;
+        
         >.cnt {
             >textarea {
                 height: 100px;
                 width: 100%;
                 border: none;
+                background:#eee;
             }
         }
         @media(max-width:600px){
