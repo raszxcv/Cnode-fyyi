@@ -1,4 +1,7 @@
 # 一个利用Vue加Cnode官方api做的Cnode社区
+
+在线地址:https://raszxcv.github.io/Cnode-fyyi/#/
+
 * 实现的功能
  * 可以使用Acctoken登录账号,可以登出
  * 可以切换选项
